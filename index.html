@@ -1,229 +1,292 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MESA YA - Innovación Gastronómica</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap');
+    <meta charset="UTF-8">
+    <title>Mapa + Sistema de Alumbrado</title>
 
-    /* ====== ESTILO GENERAL ====== */
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #0d0d0d;
-      background-image: radial-gradient(circle at 20% 20%, rgba(0, 98, 65, 0.15), transparent 70%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.08), transparent 70%);
-      color: #f1f1f1;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
 
-    /* ====== HEADER ====== */
-    header {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      text-align: center;
-      padding: 3rem 1rem 2rem;
-      border-bottom: 2px solid #ffd700;
-      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
-      position: relative;
-      overflow: hidden;
-    }
+        #map {
+            width: 100%;
+            height: 70vh;
+        }
 
-    header::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -50%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(120deg, rgba(255, 215, 0, 0.1), rgba(0, 98, 65, 0.1));
-      transform: skewY(-5deg);
-    }
+        .oculto { display: none; }
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+        h2 { color: #020a83; }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            background: #c9030d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover { background: #0055aa; }
 
-    .logo {
-      width: 130px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-      position: relative;
-      z-index: 2;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th {
+            background: #003366;
+            color: white;
+            padding: 8px;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #aaa;
+        }
+    </style>
 
-    .titulo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.8rem;
-      letter-spacing: 3px;
-      color: #ffd700;
-      margin: 1rem 0 0.5rem;
-      text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-      position: relative;
-      z-index: 2;
-    }
-
-    .slogan {
-      font-style: italic;
-      color: #b5b5b5;
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* ====== SECCIONES ====== */
-    section {
-      max-width: 900px;
-      margin: 2.5rem auto;
-      padding: 2rem 2.5rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 215, 0, 0.1);
-      border-radius: 20px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    section:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
-    }
-
-    h2 {
-      color: #ffd700;
-      border-left: 4px solid #006241;
-      padding-left: 0.7rem;
-      margin-bottom: 1.2rem;
-      font-family: 'Orbitron', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    p, li {
-      color: #eaeaea;
-      font-size: 1rem;
-    }
-
-    ul {
-      list-style: none;
-      padding-left: 1rem;
-    }
-
-    ul li::before {
-      content: "▹";
-      color: #ffd700;
-      margin-right: 8px;
-    }
-
-    img.content-img {
-      display: block;
-      margin: 1.5rem auto;
-      border-radius: 15px;
-      max-width: 85%;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-      transition: transform 0.4s ease;
-    }
-
-    img.content-img:hover {
-      transform: scale(1.03);
-    }
-
-    /* ====== FOOTER ====== */
-    footer {
-      text-align: center;
-      padding: 1.8rem;
-      background: linear-gradient(135deg, #0a0a0a 0%, #0f2027 100%);
-      color: #ffd700;
-      font-size: 0.95rem;
-      border-top: 2px solid #006241;
-      margin-top: 3rem;
-      letter-spacing: 0.5px;
-    }
-
-    /* ====== ANIMACIONES ====== */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    section, header, footer {
-      animation: fadeIn 0.9s ease both;
-    }
-  </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
+
 <body>
-  <header>
-    <a href="https://ibb.co/b5rH5ZLt">
-  <img src="https://i.ibb.co/3m0fmqWK/Whats-App-Image-2025-10-20-at-8-53-47-PM-1.jpg" 
-       alt="Logo Mesa Ya" 
-       border="0"
-       style="width:200px; height:auto; border-radius:10px;">
-</a>
 
-    <p class="slogan">De la aplicación a la mesa, sin necesidad de filas o esperas</p>
-  </header>
+<div id="map"></div>
 
-  <section>
-    <h2>Pitch del Proyecto</h2>
-    <p>
-      ¿Te imaginas reservar una mesa en tu restaurante favorito, ver el menú actualizado y pagar tu pedido en segundos, todo desde una sola app?  
-      <strong>MESA YA</strong> hace eso posible. Conecta directamente a los comensales con el restaurante, optimizando la atención, reduciendo los tiempos de espera y garantizando una experiencia moderna, segura y eficiente.  
-      Esta app une diseño intuitivo y automatización para transformar la forma en que vivimos la gastronomía.
-    </p>
-  </section>
+<div style="padding:20px">
 
-  <section>
-    <h2>Integrantes</h2>
-    <ul>
-      <li>Camilo Quitora</li>
-      <li>Dilan Torres</li>
-      <li>Juan Pablo Campos</li>
-      <li>Leon</li>
-    </ul>
-  </section>
+    <h2>Sistema de Alumbrado – Cundinamarca / Tolima / Boyacá</h2>
 
-  <section>
-    <h2>Misión</h2>
-    <p>
-      Integrar soluciones tecnológicas dentro del entorno gastronómico mediante una aplicación innovadora que mejore la comunicación entre clientes y restaurantes, optimizando reservas, pedidos y pagos en tiempo real.
-    </p>
-  </section>
+    <div id="seccionMunicipios" class="card">
+        <h3>Consumo por Municipios</h3>
+        <div id="municipios"></div>
+        <button onclick="mostrarZonas()">Ver tabla de zonas</button>
+    </div>
 
-  <section>
-    <h2>Visión</h2>
-    <p>
-      Ser una aplicación líder en la digitalización del sector gastronómico, reconocida por su impacto en la eficiencia operativa y la mejora de la experiencia del cliente en restaurantes.
-    </p>
-  </section>
+    <div id="seccionZonas" class="card oculto">
+        <h3>Tabla de Consumo y Costos por Zona</h3>
+        <table id="tablaZonas">
+            <thead>
+                <tr>
+                    <th>Departamento</th>
+                    <th>Municipio</th>
+                    <th>Zona</th>
+                    <th>Consumo (kWh)</th>
+                    <th>Valor kWh</th>
+                    <th>Costo Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button onclick="mostrarMunicipios()">Volver</button>
+    </div>
 
-  <section>
-    <h2>Justificación</h2>
-    <p>
-      En la actualidad, los restaurantes enfrentan desafíos en la gestión de pedidos, reservas y tiempos de atención.  
-      <strong>MESA YA</strong> propone una herramienta moderna que automatiza estos procesos, mejorando la experiencia tanto del cliente como del personal, e impulsando la innovación en el servicio gastronómico.
-    </p>
-  </section>
+</div>
 
-  <section>
-    <h2>Objetivo General</h2>
-    <p>
-      Desarrollar una aplicación móvil que optimice el proceso de atención en restaurantes, permitiendo a los usuarios realizar reservas, pedidos y pagos parciales de manera rápida, segura y confiable.
-    </p>
-  </section>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <section>
-    <h2>Objetivos Específicos</h2>
-    <ul>
-      <li>Permitir reservas con una anticipación mínima de 20 minutos.</li>
-      <li>Implementar un sistema de pago parcial del 50% para garantizar pedidos.</li>
-      <li>Mostrar menús actualizados con precios y promociones.</li>
-      <li>Diseñar una interfaz amigable e intuitiva.</li>
-      <li>Reducir tiempos de espera y mejorar la organización del servicio.</li>
-    </ul>
-  </section>
+<script>
+/* =====================================================
+   COORDENADAS DE MUNICIPIOS
+   ===================================================== */
+const coordenadasMunicipios = {
+    "Zipaquirá":[5.0221, -73.9947],
+    "Chía": [4.8588, -74.058],
+    "Girardot": [4.3008, -74.8034],
 
-  <footer>
-    2025 JDCA — Innovación y Tecnología Gastronómica
-  </footer>
+    "Ibagué": [4.4447, -75.2424],
+    "Espinal": [4.1492, -74.8843],
+    "Melgar": [4.2044, -74.6407],
+
+    "Tunja": [5.5353, -73.3678],
+    "Duitama": [5.8269, -73.0347],
+    "Sogamoso": [5.7204, -72.9333]
+};
+
+
+/* =====================================================
+   MAPA LEAFLET
+   ===================================================== */
+const map = L.map('map').setView([5.02, -73.99], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+/* =====================================================
+   MARCADORES CON COLORES: SALINAS (ROJO) Y PARQUE (AZUL)
+   ===================================================== */
+
+// Coordenadas reales
+const salinas = [5.0186, -74.0061];
+const parqueZipa = [5.0220, -74.0020];  
+
+/* --- ÍCONOS COLOREADOS --- */
+const iconoRojo = new L.Icon({
+    iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -28]
+});
+
+const iconoAzul = new L.Icon({
+    iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -28]
+});
+
+/* --- MARCADOR ROJO: SALINAS --- */
+L.marker(salinas, { icon: iconoRojo })
+    .addTo(map)
+    .bindPopup("<b>Salinas de Zipaquirá luminaria 1/ estado: fallo</b><br>Catedral de Sal.");
+
+/* --- MARCADOR AZUL: PARQUE PRINCIPAL --- */
+L.marker(parqueZipa, { icon: iconoAzul })
+    .addTo(map)
+    .bindPopup("<b>Parque Principal de Zipaquirá luminaria 2/ estado: activa</b><br>Plaza de los Comuneros.");
+    /* =====================================================
+   NUEVOS MARCADORES: VALVANERA (ROJO) Y PARQUE CHÍA (AZUL)
+   ===================================================== */
+
+// Coordenadas nuevas
+const valvanera = [5.02452, -74.00375];
+const parqueChia = [4.86463, -74.06047];
+
+/* =====================================================
+   MARCADOR ROJO: IGLESIA LA VALVANERA (CHÍA)
+   ===================================================== */
+
+const iglesiaValvaneraChia = [4.86742, -74.04995];
+
+L.marker(iglesiaValvaneraChia, { icon: iconoRojo })
+    .addTo(map)
+    .bindPopup("<b>Iglesia La Valvanera luminaria 1/ estado: activa</b><br>Chía, Cundinamarca.");
+
+
+/* --- MARCADOR AZUL: PARQUE PRINCIPAL DE CHÍA --- */
+L.marker(parqueChia, { icon: iconoAzul })
+    .addTo(map)
+    .bindPopup("<b>Parque Principal de Chía luminaria 2/ estado: fallo</b><br>Parque Santander.");
+
+
+
+/* =====================================================
+   FUNCIÓN PARA CENTRAR MUNICIPIO
+   ===================================================== */
+function centrarMunicipio(nombre) {
+    const coords = coordenadasMunicipios[nombre];
+    if (!coords) {
+        alert("Este municipio no tiene coordenadas definidas.");
+        return;
+    }
+    map.setView(coords, 15);
+}
+
+
+/* =====================================================
+   SISTEMA MUNICIPIOS Y ZONAS
+   ===================================================== */
+const valorKwh = 620;
+
+const departamentos = {
+    "Cundinamarca": {
+        "Zipaquirá": { zonas: { "Zona 1": 420, "Zona 2": 260 } },
+        "Chía":       { zonas: { "Zona 1": 300, "Zona 2": 180, "Zona 3": 150 } },
+        "Girardot":   { zonas: { "Zona 1": 500, "Zona 2": 340 } }
+    },
+    "Tolima": {
+        "Ibagué": { zonas: { "Zona 1": 650, "Zona 2": 430 } },
+        "Espinal": { zonas: { "Zona 1": 300, "Zona 2": 190 } },
+        "Melgar": { zonas: { "Zona 1": 250, "Zona 2": 170 } }
+    },
+    "Boyacá": {
+        "Tunja": { zonas: { "Zona 1": 400, "Zona 2": 280, "Zona 3": 200 } },
+        "Duitama": { zonas: { "Zona 1": 350, "Zona 2": 230 } },
+        "Sogamoso": { zonas: { "Zona 1": 300, "Zona 2": 260 } }
+    }
+};
+
+
+/* =====================================================
+   MOSTRAR / OCULTAR
+   ===================================================== */
+function mostrarMunicipios() {
+    document.getElementById("seccionMunicipios").classList.remove("oculto");
+    document.getElementById("seccionZonas").classList.add("oculto");
+}
+
+function mostrarZonas() {
+    document.getElementById("seccionMunicipios").classList.add("oculto");
+    document.getElementById("seccionZonas").classList.remove("oculto");
+}
+
+
+/* =====================================================
+   LISTA MUNICIPIOS
+   ===================================================== */
+let municipioDiv = document.getElementById("municipios");
+
+for (const [departamento, muniObj] of Object.entries(departamentos)) {
+    municipioDiv.innerHTML += `<h3 style="color:#003366">${departamento}</h3>`;
+
+    for (const [municipio, data] of Object.entries(muniObj)) {
+
+        let totalConsumo = Object.values(data.zonas).reduce((a, b) => a + b, 0);
+
+        municipioDiv.innerHTML += `
+            <p>
+                <strong style="color:#2b7cff; cursor:pointer"
+                    onclick="centrarMunicipio('${municipio}')">
+                    ${municipio}
+                </strong>: ${totalConsumo} kWh
+            </p>
+        `;
+    }
+}
+
+
+/* =====================================================
+   TABLA ZONAS
+   ===================================================== */
+let tabla = document.querySelector("#tablaZonas tbody");
+
+for (const [departamento, municipios] of Object.entries(departamentos)) {
+    for (const [municipio, data] of Object.entries(municipios)) {
+        for (const [zona, consumo] of Object.entries(data.zonas)) {
+
+            let costo = consumo * valorKwh;
+
+            tabla.innerHTML += `
+                <tr>
+                    <td>${departamento}</td>
+                    <td>${municipio}</td>
+                    <td>${zona}</td>
+                    <td>${consumo}</td>
+                    <td>${valorKwh} COP</td>
+                    <td>${costo.toLocaleString("es-CO")} COP</td>
+                </tr>
+            `;
+        }
+    }
+}
+
+</script>
+
 </body>
 </html>
+
+
 
